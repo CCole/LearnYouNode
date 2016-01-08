@@ -5,29 +5,36 @@ var bucket = process.argv;
 
 var urls = bucket.splice(2,5);
 var pending = urls.length; 
-var asyncData = urls.map(callback, urls); 
+//var asyncData = urls.map(asyncCollect, urls); 
+urls.forEach(asyncCollect); 
+var queue = []; 
 
+function asyncCollect(val, index, urls){
+    http.get(val, function process(res){
+            var collection = []; 
+            res.setEncoding('utf8'); 
+            res.on('data', function collect(chunk){
+                //collecting data concurrently with this callback function - runs three times 
+               collection.push(chunk)
+               //console.log(collection); 
+               
+                return collection; 
+                    });
+                 
+            
+            res.on('end', function count(process){
+                       queue.unshift(collection);
+                      // console.log(queue); 
+                       if (--pending !== 0) return
+                       
+                            function printAsync(val, index, queue){
+                            //console.log(queue);  
+                            console.log(val.join(''));
+                            }
+                            
+                            queue.forEach(printAsync);
+                            
+                        }); 
 
-
-
-function callback(value) {
-    
-
-http.get(value, function prc(res){
-	       res.setEncoding('utf8');
-    
-res.on('data', function clct(data){
-		   //collecting data concurrently with this callback function
-           //when it gets collected in one place its out of order
-       // console.log(collection);
-      
-          console.log(data); 
-    
-         }).on('end', function count(collection){
-            if (--pending !== 0) return 
-      
-                  
-                }); 
-
-});
+    });
 }

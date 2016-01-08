@@ -15,7 +15,7 @@ function asyncCollect(val, index, urls){
             res.setEncoding('utf8'); 
             res.on('data', function collect(chunk){
                 //collecting data concurrently with this callback function - runs three times 
-               collection.push(chunk)
+                collection.push(chunk)
                //console.log(collection); 
                
                 return collection; 
@@ -23,8 +23,9 @@ function asyncCollect(val, index, urls){
                  
             
             res.on('end', function count(process){
-                       queue.unshift(collection);
-                      // console.log(queue); 
+                        queue.splice(pending - 1, 0, collection); 
+                      // queue.push(collection);
+                       //console.log(queue); 
                        if (--pending !== 0) return
                        
                             function printAsync(val, index, queue){

@@ -8,9 +8,10 @@ var path = process.argv[3];
 //console.log(req); 
 
 var server = http.createServer(function serve(req,res){
-    console.log(req.rawHeaders); 
+    //console.log(req.rawHeaders); 
     var src = fs.createReadStream(path); 
-    console.log(src); 
+    //console.log(src); 
+    src.pipe(res); 
 }); 
 
 server.listen(port); 

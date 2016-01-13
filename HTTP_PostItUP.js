@@ -3,8 +3,14 @@ var port = process.argv[2];
 
 var server = http.createServer(function serve (req, res){ 
     if ( req.method == 'POST'){
+          req.on('data', function getChunks(chunk){
         
-        console.log(req.method); 
+         var upperCaseChunk = chunk.toString().toUpperCase(); 
+          res.end(upperCaseChunk);
+        
+        })
+       
+        //console.log(req.method); 
     }
     
     

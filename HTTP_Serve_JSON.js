@@ -7,12 +7,15 @@ var server = http.createServer(function serve(req, res){
     var val = parsedUrl.query.iso ;
     var date = new Date(val); 
 
-    /*JSON.stringify(
+  var pack =  JSON.stringify(
+      {
        "hour": date.getHours(),
-        
-    );*/
+       "minute": date.getMinutes(),
+       "seconds": date.getSeconds()
+      }
+    );
    // res = val; 
-    console.log(date.getHours());
+    console.log(pack);
     
 });
 

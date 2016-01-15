@@ -14,16 +14,17 @@ var server = http.createServer(function serve(req, res){
             {
             "hour": date.getHours(),
             "minute": date.getMinutes(),
-            "seconds": date.getSeconds()
+            "second": date.getSeconds()
             }
     );
     
     } else { var pack = JSON.stringify(
         {
-        "unixtime": date.getMilliseconds() 
+        "unixtime": date.getTime() 
         }
     )}
     //console.log(pack); 
+    res.writeHead(200, {'Content Type': 'application/json'} ); 
     res.write(pack); 
    res.end(); 
     
